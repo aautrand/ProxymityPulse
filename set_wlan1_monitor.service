@@ -1,0 +1,11 @@
+[Unit]
+Description=Set wlan1 to monitor mode
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/local/set_wlan1_monitor.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target

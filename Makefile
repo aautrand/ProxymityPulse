@@ -10,6 +10,10 @@ test:
 
 deploy:
 	@echo "Deploying code"
+	@echo "Push code to host"
+	@echo "Push service to host"
+	@echo "Restart service"
+
 
 run:
 	@echo "Run Proximity Pulse"

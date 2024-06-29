@@ -10,6 +10,7 @@ conf.iface = "wlan1"
 
 v = 0
 
+
 def packet_handler(p):
     global v
 

@@ -1,5 +1,6 @@
 setupenv:
 	@virtualenv .venv
+	@source .venv/bin/activate
 	@pip install -r requirements
 
 push:
@@ -17,3 +18,4 @@ deploy:
 
 run:
 	@echo "Run Proximity Pulse"
+	@sudo python proximity_pulse.py

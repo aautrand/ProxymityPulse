@@ -1,0 +1,20 @@
+# Setup
+
+1. set up permissions so that you dont have to run the app in sudo
+
+
+
+2. put interface in monitor mode
+
+sudo su -
+ifconfig wlan1 down
+iwconfig wlan1 mode monitor
+ifconfig wlan1 up
+
+
+# Run application
+
+python proximity_pulse.py
+
+
+

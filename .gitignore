@@ -122,3 +122,5 @@ ENV/
 
 # matplotlib
 .cache/
+
+.DS_Store

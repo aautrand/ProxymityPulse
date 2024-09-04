@@ -17,7 +17,7 @@ def wireless_card_available():
 
 def is_monitor_mode(interface):
     # TODO Write this code. Try not to use chatgpt
-    return True/
+    return True
 
 def packet_handler(p):
     global v
@@ -47,4 +47,3 @@ if __name__ == "__main__":
         # TODO add log msg that interface is not in monitor mode
     # TODO add log that wireless card is not available
 
-    return 0

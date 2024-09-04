@@ -38,6 +38,7 @@ def packet_handler(p):
     else:
         print("no layer11")
 
+
 if __name__ == "__main__":
     print("initializing")
     if wireless_card_available():
@@ -46,4 +47,3 @@ if __name__ == "__main__":
             sniff(iface=interface, prn=packet_handler, store=False)
         # TODO add log msg that interface is not in monitor mode
     # TODO add log that wireless card is not available
-

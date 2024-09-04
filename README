@@ -18,3 +18,13 @@ python proximity_pulse.py
 
 
 
+
+-----
+
+
+
+installing postgres
+sudo apt-get install -y postgresql
+
+
+

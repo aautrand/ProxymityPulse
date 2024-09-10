@@ -15,7 +15,7 @@ conf.iface = "wlan1"
 v = 0
 
 
-engine = create_engine("postgresql+pyscopg2://prox:password@localhost/pulse")
+engine = create_engine("postgresql+psycopg2://prox:password@localhost/pulse")
 
 Base = declarative_base()
 

@@ -43,7 +43,7 @@ def is_monitor_mode(interface):
     return True
 
 
-def packet_handler(p, stdscr):
+def packet_handler(p):
     global v
 
     if p.haslayer(Dot11):
@@ -54,7 +54,6 @@ def packet_handler(p, stdscr):
             f = session.query(Friend).filter(Friend.mac_address == p.addr2).first()
 
             if not f:
-                print("yes")
                 # Create a new Friend object with the first detection
                 friend = Friend(mac_address=p.addr2, detections=[Detection()])
                 session.add(friend)
@@ -62,45 +61,49 @@ def packet_handler(p, stdscr):
                 CURRENT_FRIENDS.append(p.addr2)
                 print(friend.mac_address, friend.detection_count)
             else:
-                print("no")
                 # Add a new detection to the existing friend using the relationship
                 detection = Detection(friend=f)
                 session.add(detection)
                 session.commit()
-                # print("\t", f.mac_address, f.detection_count)
+                print("\t", f.mac_address, f.detection_count)
 
         macs = session.query(Friend).all()
-
-        update_screen(stdscr, macs)
+        print(macs, ")))")
+        # update_screen(stdscr, macs)
         c[p.addr2] += 1
     else:
         print("no layer11")
 
 
-# if __name__ == "__main__":
-print("initializing")
-
-
-def update_screen(stdscr, macs):
-
-    # print(macs
-    curses.curs_set(0)
-    stdscr.clear()
-
-    row = 0
-    for mac in macs:
-        stdscr.addstr(row, 0, f"{mac.mac_address} {mac.detection_count}")
-        row += 1
-
-    stdscr.refresh()
-
-def main(stdscr):
+if __name__ == "__main__":
+    print("initializing")
     if wireless_card_available():
         interface = "wlan1"  # TODO make this dynamic
         if is_monitor_mode(interface):
-            sniff(iface=interface, prn=lambda pkt: packet_handler(pkt, stdscr), store=False)
+            sniff(iface=interface, prn=lambda pkt: packet_handler(pkt), store=False)
         # TODO add log msg that interface is not in monitor mode
     # TODO add log that wireless card is not available
 
 
-curses.wrapper(main)
+# def update_screen(stdscr, macs):
+#     print("test")
+#     print(macs)
+#     curses.curs_set(0)
+#     stdscr.clear()
+#
+#     row = 0
+#     for mac in macs:
+#         stdscr.addstr(row, 0, f"{mac.mac_address} {mac.detection_count}")
+#
+#     stdscr.refresh()
+#
+# def main(stdscr):
+#     if wireless_card_available():
+#         interface = "wlan1"  # TODO make this dynamic
+#         if is_monitor_mode(interface):
+#             sniff(iface=interface, prn=lambda pkt: packet_handler(pkt, stdscr), store=False)
+#         # TODO add log msg that interface is not in monitor mode
+#     # TODO add log that wireless card is not available
+
+
+# curses.wrapper(main)

@@ -18,9 +18,14 @@ class Friend(Base):
     detections: Mapped[list["Detection"]] = relationship("Detection", back_populates="friend",
                                                          cascade="all, delete-orphan")
 
+    @property
+    def detection_count(self):
+        return len(self.detections)
 
     def __repr__(self):
-        return f"<Friend(mac_address={self.mac_address}, detections={self.detections})>"
+        return f"<Friend(mac_address={self.mac_address}, detections={self.detection_count})>"
+
+
 class Detection(Base):
     __tablename__ = 'detection'
 

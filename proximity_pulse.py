@@ -29,16 +29,16 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-
-
 def wireless_card_available():
     # TODO write this code. Try to do it without chatgpt
 
     return True
 
+
 def is_monitor_mode(interface):
     # TODO Write this code. Try not to use chatgpt
     return True
+
 
 def packet_handler(p):
     global v

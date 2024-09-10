@@ -67,7 +67,7 @@ def packet_handler(p, stdscr):
                 session.commit()
                 print("\t", f.mac_address, f.detection_count)
 
-        macs = session.query(Friend.mac_address, Friend.detection_count).filter(Friend.disabled is False).all()
+        macs = session.query(Friend).filter(Friend.disabled is False).all()
         update_screen(stdscr, macs)
         c[p.addr2] += 1
     else:

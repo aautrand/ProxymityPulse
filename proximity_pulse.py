@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 
+import curses
 from datetime import datetime as dt
 from scapy.all import *
 from scapy.layers.dot11 import Dot11
@@ -30,6 +31,7 @@ session = Session()
 # ALWAYS KEEP THIS IN FALSE
 CURRENT_FRIENDS = session.query(Friend.mac_address).filter(Friend.disabled is False).all()
 
+
 def wireless_card_available():
     # TODO write this code. Try to do it without chatgpt
 
@@ -41,7 +43,7 @@ def is_monitor_mode(interface):
     return True
 
 
-def packet_handler(p):
+def packet_handler(p, stdscr):
     global v
 
     if p.haslayer(Dot11):
@@ -65,18 +67,34 @@ def packet_handler(p):
                 session.commit()
                 print("\t", f.mac_address, f.detection_count)
 
-
+        macs = session.query(Friend.mac_address, Friend.detection_count).filter(Friend.disabled is False).all()
+        update_screen(stdscr, macs)
         c[p.addr2] += 1
     else:
         print("no layer11")
 
 
-if __name__ == "__main__":
-    print("initializing")
+# if __name__ == "__main__":
+print("initializing")
 
+
+def update_screen(stdscr, macs):
+    curses.curs_set(0)
+    stdscr.clear()
+
+    row = 0
+    for mac in macs:
+        stdscr.addstr(row, 0, f"{mac.mac_address} {mac.detection_count}")
+
+    stdscr.refresh()
+
+def main(stdscr):
     if wireless_card_available():
-        interface = "wlan1" # TODO make this dynamic
+        interface = "wlan1"  # TODO make this dynamic
         if is_monitor_mode(interface):
-            sniff(iface=interface, prn=packet_handler, store=False)
+            sniff(iface=interface, prn=lambda pkt: packet_handler(pkt, stdscr), store=False)
         # TODO add log msg that interface is not in monitor mode
     # TODO add log that wireless card is not available
+
+
+curses.wrapper(main)

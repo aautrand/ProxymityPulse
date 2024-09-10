@@ -54,6 +54,7 @@ def packet_handler(p, stdscr):
             f = session.query(Friend).filter(Friend.mac_address == p.addr2).first()
 
             if not f:
+                print("yes")
                 # Create a new Friend object with the first detection
                 friend = Friend(mac_address=p.addr2, detections=[Detection()])
                 session.add(friend)
@@ -61,11 +62,12 @@ def packet_handler(p, stdscr):
                 CURRENT_FRIENDS.append(p.addr2)
                 print(friend.mac_address, friend.detection_count)
             else:
+                print("no")
                 # Add a new detection to the existing friend using the relationship
                 detection = Detection(friend=f)
                 session.add(detection)
                 session.commit()
-                print("\t", f.mac_address, f.detection_count)
+                # print("\t", f.mac_address, f.detection_count)
 
         macs = session.query(Friend).all()
 

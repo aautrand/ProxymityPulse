@@ -27,7 +27,8 @@ Base = declarative_base()
 # Create a session
 Session = sessionmaker(bind=engine)
 session = Session()
-
+# ALWAYS KEEP THIS IN FALSE
+CURRENT_FRIENDS = session.query(Friend.mac_address).filter(Friend.disabled is False).all()
 
 def wireless_card_available():
     # TODO write this code. Try to do it without chatgpt
@@ -48,7 +49,13 @@ def packet_handler(p):
         if p.addr2 not in c and p.addr2 is not None:
        
             v += 1
-            print(v,"\t" ,p.addr2,"\t", dt.now())
+            if p.addr2 not in CURRENT_FRIENDS:
+                friend = Friend(mac_address=p.addr2, detections=[Detection()])
+                session.add(friend)
+                session.commit()
+                CURRENT_FRIENDS.append(p.addr2)
+
+            print(friend.mac_address, friend.detection_count)
 
         c[p.addr2] += 1
     else:
@@ -58,8 +65,6 @@ def packet_handler(p):
 if __name__ == "__main__":
     print("initializing")
 
-    friend = session.query(Friend).all()
-    print(friend)
     if wireless_card_available():
         interface = "wlan1" # TODO make this dynamic
         if is_monitor_mode(interface):

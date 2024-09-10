@@ -30,7 +30,7 @@ class Detection(Base):
     __tablename__ = 'detection'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    detected_date: Mapped[str] = mapped_column(VARCHAR(50))  # Placeholder for date format
+    detected_date: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
     friend_id: Mapped[int] = mapped_column(Integer, ForeignKey("friend.id"))  # Foreign key linking to Friend
 
     # Relationship back to Friend table

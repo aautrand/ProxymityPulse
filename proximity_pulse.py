@@ -88,6 +88,7 @@ def update_screen(stdscr, macs):
     row = 0
     for mac in macs:
         stdscr.addstr(row, 0, f"{mac.mac_address} {mac.detection_count}")
+        row += 1
 
     stdscr.refresh()
 

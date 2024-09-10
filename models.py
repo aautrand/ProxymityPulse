@@ -32,4 +32,4 @@ class Detection(Base):
     friend: Mapped["Friend"] = relationship("Friend", back_populates="detections")
 
     def __repr__(self):
-        return "self.detected_date"
+        return f"{self.detected_date}"

@@ -60,7 +60,7 @@ if __name__ == "__main__":
     print("initializing")
 
     f = Friend(mac_address="ae:ae:19:4d:e8:15")
-    session.query(f)
+    session.add(f)  # Add to the session
     session.commit()
 
     d = Detection(detected_date=datetime.now(), friend_id=f.id)

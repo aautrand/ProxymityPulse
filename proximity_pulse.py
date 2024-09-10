@@ -68,7 +68,7 @@ def packet_handler(p):
                 print("\t", f.mac_address, f.detection_count)
 
         macs = session.query(Friend).all()
-        print(macs, ")))")
+        # print(macs, ")))")
         # update_screen(stdscr, macs)
         c[p.addr2] += 1
     else:

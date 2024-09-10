@@ -49,7 +49,9 @@ def packet_handler(p):
         if p.addr2 not in c and p.addr2 is not None:
        
             v += 1
-            if p.addr2 not in CURRENT_FRIENDS:
+            f = session.query(Friend).filter(Friend.mac_address == p.addr2).first()
+
+            if not f:
                 friend = Friend(mac_address=p.addr2, detections=[Detection()])
                 session.add(friend)
                 session.commit()

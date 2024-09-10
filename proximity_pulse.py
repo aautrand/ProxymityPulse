@@ -63,7 +63,7 @@ def packet_handler(p):
                 detection = Detection(friend=f)
                 session.add(detection)
                 session.commit()
-                print(f.mac_address, f.detection_count)
+                print("\t", f.mac_address, f.detection_count)
 
 
         c[p.addr2] += 1

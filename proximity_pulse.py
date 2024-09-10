@@ -56,8 +56,7 @@ def packet_handler(p):
                 session.add(friend)
                 session.commit()
                 CURRENT_FRIENDS.append(p.addr2)
-
-            print(friend.mac_address, friend.detection_count)
+                print(friend.mac_address, friend.detection_count)
 
         c[p.addr2] += 1
     else:

@@ -1,8 +1,7 @@
 # declarative base class
 from datetime import datetime
-from xmlrpc.client import Boolean
 
-from sqlalchemy import DateTime, VARCHAR, ForeignKey, Integer
+from sqlalchemy import DateTime, VARCHAR, ForeignKey, Integer, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, declarative_base, relationship
 
 Base = declarative_base()

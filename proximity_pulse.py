@@ -64,7 +64,7 @@ if __name__ == "__main__":
     session.commit()
 
     d = Detection(detected_date=datetime.now(), friend_id=f.id)
-    session.query(d)
+    session.add(d)
     session.commit()
 
     if wireless_card_available():

@@ -19,6 +19,8 @@ class Friend(Base):
                                                          cascade="all, delete-orphan")
 
 
+    def __repr__(self):
+        return f"<Friend(mac_address={self.mac_address}, detections={self.detections})>"
 class Detection(Base):
     __tablename__ = 'detection'
 
@@ -28,3 +30,6 @@ class Detection(Base):
 
     # Relationship back to Friend table
     friend: Mapped["Friend"] = relationship("Friend", back_populates="detections")
+
+    def __repr__(self):
+        return "self.detected_date"

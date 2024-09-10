@@ -7,7 +7,6 @@ from sqlalchemy.orm import Mapped, mapped_column, declarative_base, relationship
 Base = declarative_base()
 
 
-# Define the Friend table
 class Friend(Base):
     __tablename__ = 'friend'
 
@@ -16,18 +15,16 @@ class Friend(Base):
     disabled: Mapped[bool] = mapped_column(Boolean, default=False)
 
     # Relationship to link to Detection table
-    detections: Mapped[list["Detection"]] = relationship("Detection", back_populates="friend", cascade="all, delete-orphan")
+    detections: Mapped[list["Detection"]] = relationship("Detection", back_populates="friend",
+                                                         cascade="all, delete-orphan")
 
 
-# Define the Detection table
 class Detection(Base):
     __tablename__ = 'detection'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    detected_date: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    friend_id: Mapped[int] = mapped_column(ForeignKey('friends.id'))
+    detected_date: Mapped[str] = mapped_column(VARCHAR(50))  # Placeholder for date format
+    friend_id: Mapped[int] = mapped_column(Integer, ForeignKey("friend.id"))  # Foreign key linking to Friend
 
     # Relationship back to Friend table
     friend: Mapped["Friend"] = relationship("Friend", back_populates="detections")
-
-

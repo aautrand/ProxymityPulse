@@ -48,7 +48,7 @@ def packet_handler(p):
 
     if p.haslayer(Dot11):
 
-        if p.addr2 not in c and p.addr2 is not None:
+        if p.addr2 is not None:
        
             v += 1
             print(p.addr2)

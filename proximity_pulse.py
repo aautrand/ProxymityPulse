@@ -1,7 +1,5 @@
 from sqlalchemy import create_engine
 
-import curses
-from datetime import datetime as dt
 from scapy.all import *
 from scapy.layers.dot11 import Dot11
 from models import Friend, Detection
@@ -67,8 +65,9 @@ def packet_handler(p):
                 session.add(detection)
                 session.commit()
                 print("\t", f.mac_address, f.detection_count)
+        friends_stmt = select(Friend.mac_address, Friend.detection_count)
+        macs = session.execute(friends_stmt).fetchall()
 
-        macs = session.query(Friend).order_by(Friend.detection_count.desc()).all()
         for mac in macs:
             print(mac.mac_address, mac.detection_count)
     else:
@@ -83,27 +82,3 @@ if __name__ == "__main__":
             sniff(iface=interface, prn=lambda pkt: packet_handler(pkt), store=False)
         # TODO add log msg that interface is not in monitor mode
     # TODO add log that wireless card is not available
-
-
-# def update_screen(stdscr, macs):
-#     print("test")
-#     print(macs)
-#     curses.curs_set(0)
-#     stdscr.clear()
-#
-#     row = 0
-#     for mac in macs:
-#         stdscr.addstr(row, 0, f"{mac.mac_address} {mac.detection_count}")
-#
-#     stdscr.refresh()
-#
-# def main(stdscr):
-#     if wireless_card_available():
-#         interface = "wlan1"  # TODO make this dynamic
-#         if is_monitor_mode(interface):
-#             sniff(iface=interface, prn=lambda pkt: packet_handler(pkt, stdscr), store=False)
-#         # TODO add log msg that interface is not in monitor mode
-#     # TODO add log that wireless card is not available
-
-
-# curses.wrapper(main)

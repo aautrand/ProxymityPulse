@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 
 from scapy.all import *
 from scapy.layers.dot11 import Dot11

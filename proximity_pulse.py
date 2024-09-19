@@ -65,7 +65,7 @@ def packet_handler(p):
                 session.add(detection)
                 session.commit()
                 print("\t", f.mac_address, f.detection_count)
-        friends_stmt = select(Friend.mac_address, Friend.detection_count)
+        friends_stmt = select(Friend)
         macs = session.execute(friends_stmt).fetchall()
 
         for mac in macs:

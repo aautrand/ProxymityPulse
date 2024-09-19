@@ -36,7 +36,7 @@ def wireless_card_available():
     # TODO write this code. Try to do it without chatgpt
 
     return True
-
+0
 
 def is_monitor_mode(interface):
     # TODO Write this code. Try not to use chatgpt
@@ -52,26 +52,25 @@ def packet_handler(p):
        
             v += 1
             print(p.addr2)
-        #     f = session.query(Friend).filter(Friend.mac_address == p.addr2).first()
-        #
-        #     if not f:
-        #         # Create a new Friend object with the first detection
-        #         friend = Friend(mac_address=p.addr2, detections=[Detection()])
-        #         session.add(friend)
-        #         session.commit()
-        #         CURRENT_FRIENDS.append(p.addr2)
-        #         print(friend.mac_address, friend.detection_count)
-        #     else:
-        #         # Add a new detection to the existing friend using the relationship
-        #         detection = Detection(friend=f)
-        #         session.add(detection)
-        #         session.commit()
-        #         print("\t", f.mac_address, f.detection_count)
-        #
-        # macs = session.query(Friend).all()
-        # print(macs, ")))")
-        # update_screen(stdscr, macs)
-        c[p.addr2] += 1
+            f = session.query(Friend).filter(Friend.mac_address == p.addr2).first()
+
+            if not f:
+                # Create a new Friend object with the first detection
+                friend = Friend(mac_address=p.addr2, detections=[Detection()])
+                session.add(friend)
+                session.commit()
+                CURRENT_FRIENDS.append(p.addr2)
+                print(friend.mac_address, friend.detection_count)
+            else:
+                # Add a new detection to the existing friend using the relationship
+                detection = Detection(friend=f)
+                session.add(detection)
+                session.commit()
+                print("\t", f.mac_address, f.detection_count)
+
+        macs = session.query(Friend).order_by(Friend.detection_count).all()
+        for mac in macs:
+            print(mac.mac_address, mac.detection_count)
     else:
         print("no layer11")
 

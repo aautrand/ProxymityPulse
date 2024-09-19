@@ -68,7 +68,7 @@ def packet_handler(p):
                 session.commit()
                 print("\t", f.mac_address, f.detection_count)
 
-        macs = session.query(Friend).order_by(Friend.detection_count).all()
+        macs = session.query(Friend).order_by(Friend.detection_count.desc()).all()
         for mac in macs:
             print(mac.mac_address, mac.detection_count)
     else:
